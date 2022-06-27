@@ -5,7 +5,7 @@ class CategoryForm(StatesGroup):
     # пока только сарафаны/платья, потом додумать
     category = State()
     size = State()
-    # discount = State()
+    discount = State()
 
 
 
