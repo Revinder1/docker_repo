@@ -42,7 +42,7 @@ async def get_data_from_url(category=None, size=None):
                 headers = {
                     "Accept": "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
                     "Accept-Language": "ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3",
-                    "User-Agent": ua.random,
+                    "User-Agent": f'{ua.random}',
                     "Content-Type": "text/plain; charset=utf-8"
                 }
                 cookies = {

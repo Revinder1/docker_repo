@@ -27,6 +27,14 @@ def get_keyboard_fab():
     return builder.as_markup()
 
 
-
+def confirm_category_kb():
+    builder = InlineKeyboardBuilder()
+    builder.button(
+        text="Подтвердить", callback_data=CategoryCallbackFactory(name="confirm")
+    )
+    builder.button(
+        text="Отмена", callback_data=CategoryCallbackFactory(name="Отмена", action="stop")
+    )
+    return builder.as_markup()
 
 

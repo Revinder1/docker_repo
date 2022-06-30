@@ -6,6 +6,7 @@ class CategoryForm(StatesGroup):
     category = State()
     size = State()
     discount = State()
+    confirmed = State()
 
 
 
