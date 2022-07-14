@@ -97,5 +97,5 @@ async def confirmed_category(callback: types.CallbackQuery, state: FSMContext):
     await asyncio.sleep(1)
     await callback.message.delete()
     await callback.answer()
-    # return True
+
 

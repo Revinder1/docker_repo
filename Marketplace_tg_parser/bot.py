@@ -8,7 +8,7 @@ from sqlalchemy.orm import sessionmaker
 
 import config
 from db.base import metadata
-from handlers import wb_handler
+from handlers import wb_handler, admin_handler
 from middlewares.db import DbSessionMiddleware
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -47,12 +47,11 @@ async def main():
 
     # Регистрируем мидлварь на подмешивание сессий из пула сессий
     dp.message.middleware(DbSessionMiddleware(db_pool))
-
+    # Мидлварь на проверку наличия пользователя в БД и ограничения доступа к боту если нет в БД
     dp.message.middleware(IsApprovedMiddleware())
 
-    # МБ УБРАТЬ ВЫЗОВ КЛАССА ()
-    # dp.message.middleware(IsApprovedMiddleware())
     dp.include_router(wb_handler.router)
+    dp.include_router(admin_handler.router)
 
 
 

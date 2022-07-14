@@ -10,3 +10,12 @@ class CategoryForm(StatesGroup):
 
 
 
+class AdminForm(StatesGroup):
+    choosing = State()
+    add = State()
+    delete = State()
+    confirmed_add = State()
+    confirmed_delete = State()
+
+
+
