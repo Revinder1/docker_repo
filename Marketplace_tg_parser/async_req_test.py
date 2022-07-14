@@ -6,6 +6,7 @@ from aiocsv import AsyncWriter
 import aiofiles
 import aiohttp
 from fake_useragent import UserAgent
+from json.decoder import JSONDecodeError
 
 from categories_switcher.switcher import category_switcher
 
@@ -38,6 +39,7 @@ async def get_data_from_url(category=None, size=None):
             )
             numerate = 1
             for i in range(1, pages + 1):
+
                 ua = UserAgent()
                 headers = {
                     "Accept": "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
@@ -64,8 +66,16 @@ async def get_data_from_url(category=None, size=None):
                 async with session.get(url, headers=headers, cookies=cookies) as resp:
 
                     formatted_data = []
-                    raw = await resp.read()
-                    content = json.loads(raw)
+                    # raw = await resp.read()
+                    # content = json.loads(raw)
+                    # Т.к. даже на сайте после 100 страницы идет какой-то муляж
+                    # нумерация страницы меняется - контент нет, делаю брейк после 100стр.
+                    try:
+                        raw = await resp.read()
+                        content = json.loads(raw)
+                    except JSONDecodeError:
+                        print('Загружено 10000 позиций!')
+                        break
                     for card in content['data']['products']:
                         card_number = numerate
                         card_id = card.get('id')
@@ -74,15 +84,20 @@ async def get_data_from_url(category=None, size=None):
                         card_price = card.get('priceU') / 100
                         card_discount_price = card.get('salePriceU') / 100
                         for s in card.get('sizes'):
-                            if str(size) in s.get('origName'):
+                            if str(size) in s.get('origName') or str(size) in s.get('name'):
                                 card_size = size
                                 break
+
                         card_link = f'https://www.wildberries.ru/catalog/{card_id}/detail.aspx?targetUrl=GP'
                         formatted_data.append(
                             [card_number, card_id, card_name, card_brand, card_price, card_discount_price, card_size,
                              card_link])
                         numerate += 1
+
                 await writer.writerows(formatted_data)
+
+                # if page % 50 == 0:
+                #     await asyncio.sleep(25)
                 page += 1
 
 
@@ -121,11 +136,12 @@ async def dresses_pagination(size_code, category=None):
                     count = item['count']
                 continue
             result_count = count // 99
+            #
             return result_count
 
 
 async def main():
-    await get_data_from_url("Сарафаны", 42)
+    await get_data_from_url("Платье", 42)
 
 
 if __name__ == '__main__':

@@ -15,7 +15,7 @@ def get_keyboard_fab():
         text="Сарафаны", callback_data=CategoryCallbackFactory(name="Сарафаны")
     )
     builder.button(
-        text="Платья", callback_data=CategoryCallbackFactory(name="Платья")
+        text="Платья", callback_data=CategoryCallbackFactory(name="Платье")
     )
     builder.button(
         text="Все вместе", callback_data=CategoryCallbackFactory(name="Все вместе")

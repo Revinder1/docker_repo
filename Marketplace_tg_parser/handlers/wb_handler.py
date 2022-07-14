@@ -9,7 +9,7 @@ from keyboards.discount_kb_factory import DiscountCallbackFactory, get_discount_
 from keyboards.wb_keyboard import CategoryCallbackFactory, get_keyboard_fab, confirm_category_kb
 
 router = Router()
-router.message.filter(F.chat.type.in_({"private", }))
+# router.message.filter(F.chat.type.in_({"private", }))
 
 
 @router.message(commands=["start"])

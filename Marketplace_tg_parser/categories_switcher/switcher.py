@@ -4,7 +4,7 @@
 # ЖЕНСКОЕ-ПЛАТЬЯ/САРАФАНЫ
 
 category_switcher = {
-        'Платья': 'xsubject=69',
+        'Платье': 'xsubject=69',
         'Сарафаны': 'xsubject=70',
     }
 
