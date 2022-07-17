@@ -107,9 +107,3 @@ async def confirm_del(message: types.Message, state: FSMContext, session: AsyncS
     else:
         await message.answer("Такого пользователя не существует", reply_markup=types.ReplyKeyboardRemove())
 
-
-
-
-
-
-
